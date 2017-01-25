@@ -35,7 +35,7 @@ do
 end
 
 --### Definitions ###--
-beautiful.init(awful.util.getdir("config") .. "/themes/" .. localconfig.theme .. "/theme.lua")
+beautiful.init(localconfig.theme .. "/theme.lua")
 beautiful.wallpaper = localconfig.wallpaper
 
 modkey = "Mod4"
@@ -58,10 +58,10 @@ awful.layout.layouts = {
 clockwidget = wibox.widget.textclock("%H:%M:%S", 1)
 
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='" .. beautiful.cpucolor .. "'>$1%</span> ", 1)
+vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='" .. localconfig.colors["cpu"] .. "'>$1%</span> ", 1)
 
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "<span color='" .. beautiful.memorycolor .."'>$2MB</span> ", 5)
+vicious.register(memwidget, vicious.widgets.mem, "<span color='" .. localconfig.colors["memory"] .."'>$2MB</span> ", 5)
 
 diowidget = wibox.widget.textbox()
 vicious.register(diowidget, vicious.widgets.dio, function (widgets, args)
@@ -86,60 +86,48 @@ vicious.register(diowidget, vicious.widgets.dio, function (widgets, args)
         result = result .. read .. write .. " "
     end
 
-    return "<span color='" .. beautiful.diocolor .. "'>" .. result .. "</span>"
+    return "<span color='" .. localconfig.colors["dio"] .. "'>" .. result .. "</span>"
 end, 2)
 
 networkwidget = wibox.widget.textbox()
 vicious.register(networkwidget, vicious.widgets.net,
-                 "<span color='" .. beautiful.netcolor .. "'>${" .. localconfig.networkdevice .. " down_mb}MB/s ${" .. localconfig.networkdevice .. " up_mb}MB/s</span> ", 1)
+                 "<span color='" .. localconfig.colors["net"] .. "'>${" .. localconfig.networkdevice .. " down_mb}MB/s ${" .. localconfig.networkdevice .. " up_mb}MB/s</span> ", 1)
 
 batterywidget = wibox.widget.textbox()
 vicious.register(batterywidget, vicious.widgets.bat, function (widgets, args)
     if args[1] == "⌁" or args[1] == "↯" then
         return ""
-    else
-        if args[1] == "-" then
-            if args[2] < 10 then
-                if batterylownotified == 0 then
-                    batterylownotified = 1
-                    naughty.notify({
-                        preset = naughty.config.presets.critical,
-                        title = "Battery is low!",
-                        text = args[2] .. "% left (" .. args[3] .. ")",
-                    })
-                end
-                return "<span color='" .. beautiful.batterycolordischarginglow .. "'>" .. args[2] .. "% " .. args[1] .. args[3] ..  "</span> "
-            elseif args[2] < 4 then
-                naughty.notify({
-                    preset = naughty.config.presets.critical,
-                    title = "Battery is very low!",
-                    text = args[2] .. "% left (" .. args[3] .. ")",
-                })
-                return "<span color='" .. beautiful.batterycolordischarging .. "'>" .. args[2] .. "% " .. args[1] .. args[3] ..  "</span> "
-            else
-                return "<span color='" .. beautiful.batterycolordischarging .. "'>" .. args[2] .. "% " .. args[1] .. args[3] ..  "</span> "
-            end
-        else
-            batterylownotified = 0
-            return "<span color='" .. beautiful.batterycolorcharging .. "'>" .. args[2] .. "% " .. args[1] .. args[3] ..  "</span> "
-        end
     end
+
+    if args[1] == "-" then
+        if args[2] < 10 then
+            color = localconfig.colors["bat_low"]
+        else
+            color = localconfig.colors["bat_discharging"]
+        end
+    else
+        color = localconfig.colors["bat_charging"]
+    end
+
+    return "<span color='" .. color .. "'>" .. args[2] .. "% " .. args[1] .. args[3] ..  "</span> "
 end, 10, localconfig.batterydevice)
 
 pulsewidget = wibox.widget.textbox()
 if localconfig.pulsesinks ~= nil then
-    vicious.register(pulsewidget, pulsedefault, "<span color='" .. beautiful.volumecolor .. "'>$1</span>", 2, localconfig.pulsesinks)
+    vicious.register(pulsewidget, pulsedefault, "<span color='" .. localconfig.colors["volume"] .. "'>$1</span>", 2, localconfig.pulsesinks)
 end
 
 volumewidget = wibox.widget.textbox()
 vicious.register(volumewidget, vicious.widgets.volume, function (widgets, args)
     if args[2] == "♩" then
-        return "<span color='" .. beautiful.volumecolor .. "'>--%</span> "
+        value = "--"
     elseif args[1] then
-        return "<span color='" .. beautiful.volumecolor .. "'>" .. args[1] .. "%</span> "
+        value = args[1]
     else
-        return "<span color='" .. beautiful.volumecolor .. "'>??%</span> "
+        value = "??"
     end
+
+    return "<span color='" .. localconfig.colors["volume"] .. "'>" .. value .. "%</span> "
 end, 1, localconfig.audiodevice)
 
 -- Create a wibox for each screen and add it

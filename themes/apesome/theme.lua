@@ -22,14 +22,6 @@ theme.bg_urgent = "#3f3f3f"
 
 -- Widgets
 theme.taglist_bg_focus = "#5e79b3"
-theme.cpucolor     = "#e6a299"
-theme.memorycolor  = "#99bfe6"
-theme.diocolor     = "#a0e699"
-theme.netcolor     = "#99e6d9"
-theme.batterycolorcharging = "#e6c399"
-theme.batterycolordischarging = "#c599e6"
-theme.batterycolordischarginglow = "#e699cf"
-theme.volumecolor  = "#dfe699"
 
 -- Borders
 theme.border_normal = "#070f28"

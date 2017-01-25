@@ -1,8 +1,19 @@
 local localconfig = {}
 
 -- Set the theme
-localconfig.theme = "apesome"
+localconfig.theme = "~/.config/awesome/themes/apesome"
 localconfig.wallpaper = "/home/ape/.wallpaper/pallas.jpg"
+
+localconfig.colors = {
+    ["cpu"] = "#e6a299",
+    ["memory"] = "#99bfe6",
+    ["dio"] = "#a0e699",
+    ["net"] = "#99e6d9",
+    ["bat_charging"] = "#e6c399",
+    ["bat_discharging"] = "#c599e6",
+    ["bat_low"] = "#e699cf",
+    ["volume"] = "#dfe699",
+}
 
 -- Applications to run on startup
 localconfig.autorun = {
