@@ -1,9 +1,9 @@
 local gears = require("gears")
-local awful = require("awful")
+awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
+naughty = require("naughty")
 local vicious = require("vicious")
 
 local pulsedefault = require("pulsedefault")
