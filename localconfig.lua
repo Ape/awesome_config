@@ -15,14 +15,16 @@ localconfig.autorun = {
 
 -- Assign specific applications to selected tags
 localconfig.classtags = {
-	["Gajim"] = { 1, 12 },
-	["Thunderbird"] = { 1, 13 },
+	["Gajim"] = "w",
+	["Thunderbird"] = "e",
 }
 
--- Set special tag properties
-localconfig.tagproperties = {
-	{ localconfig.classtags["Gajim"], function(t) t.master_width_factor = .14 end },
-	{ localconfig.classtags["Gajim"], function(t) t.column_count = 4 end },
+-- Setup special tags
+localconfig.tagsetup = {
+	["w"] = function(t)
+        t.master_width_factor = .14
+        t.column_count = 4
+    end,
 }
 
 -- Add custom hotkeys

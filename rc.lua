@@ -245,15 +245,11 @@ awful.screen.connect_for_each_screen(function(s)
             s.mylayoutbox,
         },
     }
+
+    for tagname, func in pairs(localconfig.tagsetup) do
+        func(awful.tag.find_by_name(s, tagname))
+    end
 end)
-
-for i, config in ipairs(localconfig.tagproperties) do
-    local screen_id = config[1][1]
-    local tag_id = config[1][2]
-    local func = config[2]
-
-    func(screen[screen_id].tags[tag_id])
-end
 
 --### Key bindings ###--
 globalkeys = awful.util.table.join(
@@ -426,18 +422,10 @@ awful.rules.rules = {
     },
 }
 
-local function ruleselector(isname, application)
-    if isname then
-        return { name = application }
-    else
-        return { class = application }
-    end
-end
-
-for application, data in pairs(localconfig.classtags) do
+for class, tag in pairs(localconfig.classtags) do
     table.insert(awful.rules.rules, {
-        rule = ruleselector(data[3], application),
-        properties = { tag = screen[data[1]].tags[data[2]] }
+        rule = { class = class },
+        properties = { tag = tag },
     })
 end
 
