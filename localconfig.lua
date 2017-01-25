@@ -1,9 +1,8 @@
 local localconfig = {}
 
--- Set the theme
+-- Theme
 localconfig.theme = "~/.config/awesome/themes/apesome"
 localconfig.wallpaper = "/home/ape/.wallpaper/pallas.jpg"
-
 localconfig.colors = {
     ["cpu"] = "#e6a299",
     ["memory"] = "#99bfe6",
@@ -15,7 +14,7 @@ localconfig.colors = {
     ["volume"] = "#dfe699",
 }
 
--- Applications to run on startup
+-- Startup applications
 localconfig.autorun = {
 	"unclutter -idle 2",
 	"xset -dpms",
@@ -24,13 +23,13 @@ localconfig.autorun = {
 	"pulseaudio --start",
 }
 
--- Assign specific applications to selected tags
-localconfig.classtags = {
+-- Assign applications to tags
+localconfig.applicationtags = {
 	["Gajim"] = "w",
 	["Thunderbird"] = "e",
 }
 
--- Setup special tags
+-- Special tags
 localconfig.tagsetup = {
 	["w"] = function(t)
         t.master_width_factor = .14
@@ -38,9 +37,9 @@ localconfig.tagsetup = {
     end,
 }
 
--- Add custom hotkeys
+-- Custom hotkeys
 localconfig.hotkeys = {
-	-- Launch useful applications
+	-- Launch applications
 	{ "scrot", "Print" },
 	{ "termite", "Return", { "Mod4" } },
 	{ "xkill", "s", { "Mod4" } },
@@ -81,16 +80,16 @@ localconfig.hotkeys = {
 	{ "pavucontrol", "KP_Divide", { "Mod4"} },
 }
 
--- Set windows to run fullscreen
+-- Set applications to run fullscreen
 localconfig.fullscreenclasses = {
 	"Xephyr",
 }
 
+-- Panel information configuration
 localconfig.diskdevices = { "sda", "md127" }
 localconfig.networkdevice = "enp3s0"
 localconfig.batterydevice = "BAT0"
 localconfig.audiodevice = "Master"
-
 localconfig.pulsesinks = {
 	speakers_eq = "",
 	speakers_desk = "D",

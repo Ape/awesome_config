@@ -410,7 +410,7 @@ awful.rules.rules = {
     },
 }
 
-for class, tag in pairs(localconfig.classtags) do
+for class, tag in pairs(localconfig.applicationtags) do
     table.insert(awful.rules.rules, {
         rule = { class = class },
         properties = { tag = tag },
