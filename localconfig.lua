@@ -12,6 +12,8 @@ localconfig.colors = {
     ["bat_discharging"] = "#c599e6",
     ["bat_low"] = "#e699cf",
     ["volume"] = "#dfe699",
+    ["border_focus_stopped"] = "#ff0000",
+    ["border_normal_stopped"] = "#990000",
 }
 
 -- Startup applications
@@ -42,7 +44,6 @@ localconfig.hotkeys = {
 	-- Launch applications
 	{ "scrot", "Print" },
 	{ "termite", "Return", { "Mod4" } },
-	{ "xkill", "s", { "Mod4" } },
 	{ "chromium --user-data-dir=/home/ape/.config/chromium", "x", { "Mod4" } },
 	{ "chromium --user-data-dir=/home/ape/.config/chromium-guest", "v", { "Mod4" } },
 	{ "termite -e 'ranger'", "c", { "Mod4" } },

@@ -291,6 +291,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "a", function () awful.screen.focused().mypromptbox:run() end)
 )
 
+function kill_recursive(pid, signal)
+    awful.spawn.with_shell("pstree -p " .. pid .. " | grep -o '([0-9]\\+)' | grep -o '[0-9]\\+' | xargs kill -" .. signal)
+end
+
 clientkeys = awful.util.table.join(
     awful.key({ modkey, }, "f", function (c)
         c.fullscreen = not c.fullscreen
@@ -299,7 +303,20 @@ clientkeys = awful.util.table.join(
     awful.key({ "Mod1", }, "F4", function (c) c:kill() end),
     awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey }, "n", function (c) c.minimized = true end)
+    awful.key({ modkey }, "n", function (c) c.minimized = true end),
+    awful.key({ modkey }, "s", function (c)
+        if c.pid then
+            c.stopped = not c.stopped
+
+            if c.stopped then
+                kill_recursive(c.pid, "STOP")
+                c.border_color = localconfig.colors["border_focus_stopped"]
+            else
+                kill_recursive(c.pid, "CONT")
+                c.border_color = beautiful.border_focus
+            end
+        end
+    end)
 )
 
 for i, tag_key in ipairs(tag_keys) do
@@ -432,8 +449,21 @@ client.connect_signal("manage", function (c)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+    if c.stopped then
+        c.border_color = localconfig.colors["border_focus_stopped"]
+    else
+        c.border_color = beautiful.border_focus
+    end
+end)
+
+client.connect_signal("unfocus", function(c)
+    if c.stopped then
+        c.border_color = localconfig.colors["border_normal_stopped"]
+    else
+        c.border_color = beautiful.border_normal
+    end
+end)
 
 -- Hide tags with no clients
 local function hidetags(s)
