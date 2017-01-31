@@ -42,6 +42,8 @@ modkey = "Mod4"
 tag_keys  = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p" }
 numpad_keys = { 87, 88, 89, 83, 84, 85, 79, 80, 81, 90, 91 }
 
+awful.mouse.snap.edge_enabled = false
+
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
